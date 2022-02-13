@@ -16,7 +16,7 @@ export class EventEditorComponent implements OnInit {
   // 1. Kiolvasni az id paramétert az URL-ből.
   // 2. Ezzel a paraméterrel meghívni az EventService.get metódust.
   event$: Observable<Event> = this.activatedRoute.params.pipe(
-    switchMap( params => this.eventService.get(params['id']) )
+    switchMap(params => this.eventService.get(params['id']))
   );
 
   constructor(
@@ -25,8 +25,17 @@ export class EventEditorComponent implements OnInit {
     private router: Router,
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
+  onUpdate(eventFrom: NgForm, event: Event): void {
 
+    if (event.id === 0) {
+      this.eventService.create(event)        
+    }
+    else {
+      this.eventService.update(event);
+    }
+
+  }
 
 }

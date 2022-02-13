@@ -20,4 +20,8 @@ export class EventsListComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  onRemove(id:number):void{
+    this.eventService.remove(id);
+  }
+
 }

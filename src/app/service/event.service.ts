@@ -15,7 +15,7 @@ export class EventService {
   }
 
   getAll(): Observable<Event[]> {
-    return this.http.get<Event[]>(this.eventsUrl);
+    return this.http.get<Event[]>(`${this.eventsUrl}`);
   }
 
   get(id: number): Observable<Event> {
@@ -27,6 +27,14 @@ export class EventService {
       `${this.eventsUrl}/${event.id}`,
       event,
     );
+  }
+
+  create(event: Event): Observable<Event> {
+    return this.http.post<Event>(`${this.eventsUrl}`, event);
+  }
+
+  remove(id: number): Observable<Event> {
+    return this.http.delete<Event>(`${this.eventsUrl}/${id}`);
   }
 
 }

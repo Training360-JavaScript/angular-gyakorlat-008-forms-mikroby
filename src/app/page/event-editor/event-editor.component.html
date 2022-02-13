@@ -1,29 +1,45 @@
 <div class="row">
   <div *ngIf="(event$ | async) as event" class="col-6 offset-3">
     <form #eventForm="ngForm" (ngSubmit)="onUpdate(eventForm, event)">
+
       <div class="form-group">
         <label for="">Name</label>
         <input name="name" [(ngModel)]="event.name" type="text"
-          class="form-control" pattern=".{8,}" required>
+          class="form-control" pattern=".{8,25}" required>
         <div [hidden]="eventForm.controls.name?.valid" class="error-message">
-          The name of the event must be...
+          The name of the event must be at least 8 max.25 characters.
         </div>
       </div>
+
       <div class="form-group">
         <label for="">Date</label>
         <input name="date" [(ngModel)]="event.date" type="text"
-          class="form-control">
+          class="form-control" required pattern="^\d{2}\/\d{2}\/\d{4}$">
+        <div [hidden]="eventForm.controls.date?.valid" class="error-message">
+          The date must be in DD/MM/YYYY format.
+        </div>
       </div>
+      
       <div class="form-group">
         <label for="">Time</label>
-        <input name="time" [(ngModel)]="event.time" type="text" class="form-control">
+        <input name="time" [(ngModel)]="event.time" type="text"
+          class="form-control" required pattern="^\d{2}:\d{2}(am|pm)$">
+        <div [hidden]="eventForm.controls.time?.valid" class="error-message">
+          The time must be in HH:MMam or pm format.
+        </div>
       </div>
+      
       <div class="form-group">
         <label for="">Location</label>
-        <input name="location" [(ngModel)]="event.location" type="text" class="form-control">
+        <input name="location" [(ngModel)]="event.location" type="text"
+          class="form-control" required pattern="^[A-Z][A-za-z ]{4,24}$">
+        <div [hidden]="eventForm.controls.location?.valid" class="error-message">
+          Location must start uppercase and be at least 5 max.25 characters.
+        </div>
       </div>
 
-      <button type="submit" class="btn btn-primary btn-block btn-lg">
+      <button type="submit" class="btn btn-primary btn-block btn-lg"
+      [disabled]="eventForm.invalid">
         <i class="fa fa-save"></i>
       </button>
     </form>
